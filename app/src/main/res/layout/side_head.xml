@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/colorWhite"
     android:padding="14dp">
 
     <TextView
@@ -13,6 +13,6 @@
         android:text="设 置"
         android:textStyle="normal"
         android:textSize="32sp"
-        android:textColor="#13227A"/>
+        android:textColor="@color/colorPrimary"/>
 
 </RelativeLayout>

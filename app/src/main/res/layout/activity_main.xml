@@ -27,7 +27,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="16dp"
                 android:clickable="true"
-                android:text="梦享"
+                android:text="PanTa"
                 android:textColor="@color/main_side"
                 android:textSize="20sp"
                 android:layout_centerVertical="true"/>
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="#FFFFFF"
+        android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/side_head"
         app:menu="@menu/side_left_item">

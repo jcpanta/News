@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/home_tablayout"
-        android:background="#EBEBEB"/>
+        android:background="@color/colorEB"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/home_viewpager"
