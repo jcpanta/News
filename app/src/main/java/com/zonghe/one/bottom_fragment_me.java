@@ -14,6 +14,7 @@ public class bottom_fragment_me extends Fragment {
     private static Context context;
     View view;
     TextView me_name;
+    private static String strUserName;
 
     public static bottom_fragment_me createFragment(Context main_me){
         context = main_me;
@@ -28,10 +29,9 @@ public class bottom_fragment_me extends Fragment {
         Intent intent1=getActivity().getIntent();
         if (intent1 != null){
             Bundle data=intent1.getExtras();
-            String strUserName=data.getString("username");
+            strUserName=data.getString("username");
             me_name.setText(strUserName);
         }
-
         return view;
     }
     @Override

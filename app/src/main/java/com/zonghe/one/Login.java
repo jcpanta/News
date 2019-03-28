@@ -3,7 +3,6 @@ package com.zonghe.one;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +34,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
 
@@ -42,6 +42,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
             startActivity(new Intent(Login.this,Main.class));
             Login.this.finish();
         }
+        */
 
         setContentView(R.layout.activity_login);
 
@@ -103,8 +104,8 @@ public class Login extends AppCompatActivity {  //登录界面活动
 
                 Intent intent1=new Intent(Login.this,Main.class);
 
-                editorMain.putBoolean("main",true);
-                editorMain.commit();
+                //editorMain.putBoolean("main",true);
+                //editorMain.commit();
 
                 Bundle data=new Bundle();
                 data.putString("username",userName);
