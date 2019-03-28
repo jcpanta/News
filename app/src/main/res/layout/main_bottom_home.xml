@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
 
     <android.support.design.widget.TabLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/home_tablayout"
-        android:background="@color/colorEB"/>
+        android:background="@color/colorLine"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/home_viewpager"

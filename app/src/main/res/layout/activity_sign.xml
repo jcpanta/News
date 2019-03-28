@@ -89,7 +89,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
-        android:text="had counts? sign in"
+        android:text="had accounts? sign in"
         android:clickable="true"
         android:textColor="@color/login_sign"
         android:textSize="12sp"
