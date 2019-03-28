@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Sign extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class Sign extends AppCompatActivity {
     private EditText mPwdCheck;
     private Button mSureButton;
     private UserDataManager mUserDataManager;
+    TextView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,15 @@ public class Sign extends AppCompatActivity {
         mPwd = (EditText)findViewById(R.id.sign_password);
         mPwdCheck = (EditText)findViewById(R.id.sign_repassword);
         mSureButton = (Button)findViewById(R.id.sign_sign);
-
         mSureButton.setOnClickListener(m_sign_Listener);
+
+        back=(TextView)findViewById(R.id.sign_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sign.this.finish();
+            }
+        });
 
         if (mUserDataManager == null){
             mUserDataManager = new UserDataManager(this);

@@ -3,6 +3,7 @@ package com.zonghe.one;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,10 +28,21 @@ public class Login extends AppCompatActivity {  //登录界面活动
 
     private UserDataManager mUserDataManager;
 
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+
+        if (sprfMain.getBoolean("main",false)){
+            startActivity(new Intent(Login.this,Main.class));
+            Login.this.finish();
+        }
+
         setContentView(R.layout.activity_login);
 
         mAccount = (EditText)findViewById(R.id.login_username);
@@ -89,9 +101,18 @@ public class Login extends AppCompatActivity {  //登录界面活动
                 }
                 editor.commit();
 
-                startActivity(new Intent(Login.this, Main.class));
+                Intent intent1=new Intent(Login.this,Main.class);
+
+                editorMain.putBoolean("main",true);
+                editorMain.commit();
+
+                Bundle data=new Bundle();
+                data.putString("username",userName);
+                intent1.putExtras(data);
+
+                startActivity(intent1);
                 Toast.makeText(Login.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                finish();
+                Login.this.finish();
             }else if (result == 0){
                 Toast.makeText(Login.this,"账号或密码不正确",Toast.LENGTH_SHORT).show();
             }

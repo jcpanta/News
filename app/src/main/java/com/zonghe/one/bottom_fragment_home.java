@@ -21,9 +21,8 @@ public class bottom_fragment_home extends Fragment {
     private List<Fragment> home_list;
     private ViewPager home_viewpager;
     private TabLayout home_tablayout;
-    private  bottom_fragment_home.MyAdapter home_adapter;
+    private bottom_fragment_home.MyAdapter home_adapter;
     private String[] home_title = {"推荐","资讯","论坛"};
-
 
     public static bottom_fragment_home createFragment(Context main_home){
         context = main_home;
@@ -32,7 +31,7 @@ public class bottom_fragment_home extends Fragment {
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view=inflater.inflate(R.layout.main_bottom_home,container,false);
+        view=inflater.inflate(R.layout.main_bottom_home,container,false);
 
         home_viewpager=(ViewPager)view.findViewById(R.id.home_viewpager);
         home_tablayout=(TabLayout)view.findViewById(R.id.home_tablayout);

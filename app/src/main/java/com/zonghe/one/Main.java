@@ -1,7 +1,9 @@
 package com.zonghe.one;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -26,6 +28,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private NavigationView navigationView;
     TextView main_name;
     ImageButton main_search;
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +135,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Main.this,"暂不支持",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.side_out:
-                        startActivity(new Intent(Main.this, Login.class));
-                        finish();
+                        resetSprfMain();
+                        Intent intent=new Intent(Main.this,Login.class);
+                        startActivity(intent);
+                        Main.this.finish();
                         break;
                 }
                 drawerLayout.closeDrawer(navigationView);
@@ -153,8 +159,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+
     @Override
     public void  onPointerCaptureChanged(boolean hasCapture){
+    }
 
+    public void resetSprfMain(){
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+        editorMain.putBoolean("main",false);
+        editorMain.commit();
     }
 }
