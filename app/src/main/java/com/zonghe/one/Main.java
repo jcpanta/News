@@ -3,6 +3,7 @@ package com.zonghe.one;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -135,7 +136,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         break;
                     case R.id.side_out:
 
-                        //resetSprfMain();
+                        resetSprfMain();
 
                         Intent intent=new Intent(Main.this,Login.class);
                         startActivity(intent);
@@ -165,12 +166,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void  onPointerCaptureChanged(boolean hasCapture){
     }
 
-    /*
+
     public void resetSprfMain(){
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
         editorMain.putBoolean("main",false);
         editorMain.commit();
     }
-    */
+
 }

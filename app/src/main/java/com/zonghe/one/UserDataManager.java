@@ -16,6 +16,7 @@ public class UserDataManager {
     public static final String ID = "_id";
     public static final String USER_NAME = "user_name";
     public static final String USER_PWD = "user_pwd";
+    //public static final String USER_SEX="user_sex";
     //    public static final String SILENT = "silent";
     //    public static final String VIBRATE = "vibrate";
     private static final int DB_VERSION = 2;

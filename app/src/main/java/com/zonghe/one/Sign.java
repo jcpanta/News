@@ -74,8 +74,9 @@ public class Sign extends AppCompatActivity {
                     Toast.makeText(Sign.this,"注册失败",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(Sign.this,"注册成功",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Sign.this,Login.class));
-                    finish();
+                    Intent intent=new Intent(Sign.this,Login.class);
+                    startActivity(intent);
+                    Sign.this.finish();
                 }
             }
         }

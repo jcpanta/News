@@ -3,6 +3,7 @@ package com.zonghe.one;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 public class Login extends AppCompatActivity {  //登录界面活动
 
@@ -22,8 +25,9 @@ public class Login extends AppCompatActivity {  //登录界面活动
     private CheckBox mRememberCheck;
 
     private SharedPreferences login_sp;
-    private  String userNameValue;
-    private  String passwordValue;
+    private String userNameValue;
+    private String passwordValue;
+    int ranColor;
 
     private UserDataManager mUserDataManager;
 
@@ -33,17 +37,6 @@ public class Login extends AppCompatActivity {  //登录界面活动
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*
-        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
-        editorMain=sprfMain.edit();
-
-        if (sprfMain.getBoolean("main",false)){
-            startActivity(new Intent(Login.this,Main.class));
-            Login.this.finish();
-        }
-        */
-
         setContentView(R.layout.activity_login);
 
         mAccount = (EditText)findViewById(R.id.login_username);
@@ -86,6 +79,10 @@ public class Login extends AppCompatActivity {  //登录界面活动
     };
     public void login(){
         if(isUserNameAndPwdValid()){
+
+            Random random=new Random();
+            ranColor=0xff000000|random.nextInt(0x00ffffff);
+
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor = login_sp.edit();
@@ -104,11 +101,12 @@ public class Login extends AppCompatActivity {  //登录界面活动
 
                 Intent intent1=new Intent(Login.this,Main.class);
 
-                //editorMain.putBoolean("main",true);
-                //editorMain.commit();
+                editorMain.putBoolean("main",true);
+                editorMain.commit();
 
                 Bundle data=new Bundle();
                 data.putString("username",userName);
+                data.putInt("ranColor",ranColor);
                 intent1.putExtras(data);
 
                 startActivity(intent1);
@@ -135,6 +133,15 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager = new UserDataManager(this);
             mUserDataManager.openDataBase();
         }
+
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+
+        if (sprfMain.getBoolean("main",false)){
+            startActivity(new Intent(Login.this,Main.class));
+            Login.this.finish();
+        }
+
         super.onResume();
     }
     @Override
