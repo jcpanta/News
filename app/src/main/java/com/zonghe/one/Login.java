@@ -27,6 +27,8 @@ public class Login extends AppCompatActivity {  //登录界面活动
     private SharedPreferences login_sp;
     private String userNameValue;
     private String passwordValue;
+    private static String userName;
+    private static String userPwd;
     int ranColor;
 
     private UserDataManager mUserDataManager;
@@ -38,6 +40,9 @@ public class Login extends AppCompatActivity {  //登录界面活动
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Random random=new Random();
+        ranColor=0xff000000|random.nextInt(0x00ffffff);
 
         mAccount = (EditText)findViewById(R.id.login_username);
         mPwd = (EditText)findViewById(R.id.login_password);
@@ -63,6 +68,9 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager = new UserDataManager(this);
             mUserDataManager.openDataBase();
         }
+
+        userName = mAccount.getText().toString().trim();
+        userPwd = mPwd.getText().toString().trim();
     }
     OnClickListener mListener = new OnClickListener() {
         @Override
@@ -79,12 +87,6 @@ public class Login extends AppCompatActivity {  //登录界面活动
     };
     public void login(){
         if(isUserNameAndPwdValid()){
-
-            Random random=new Random();
-            ranColor=0xff000000|random.nextInt(0x00ffffff);
-
-            String userName = mAccount.getText().toString().trim();
-            String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor = login_sp.edit();
             int result = mUserDataManager.findUserByNameAndPwd(userName,userPwd);
             if (result == 1) {
@@ -138,7 +140,15 @@ public class Login extends AppCompatActivity {  //登录界面活动
         editorMain=sprfMain.edit();
 
         if (sprfMain.getBoolean("main",false)){
-            startActivity(new Intent(Login.this,Main.class));
+            Intent intent1=new Intent(Login.this,Main.class);
+
+            Bundle data=new Bundle();
+            data.putString("username",userName);
+            data.putInt("ranColor",ranColor);
+            intent1.putExtras(data);
+
+            startActivity(intent1);
+            Toast.makeText(Login.this, "登陆成功", Toast.LENGTH_SHORT).show();
             Login.this.finish();
         }
 

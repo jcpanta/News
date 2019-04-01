@@ -52,4 +52,21 @@ public class bottom_fragment_me extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+    /*
+    public static String stringtounicode(String strUserName){
+        char[] chars=strUserName.toCharArray();
+        StringBuilder sb=new StringBuilder("");
+        byte[] ba=strUserName.getBytes();
+        int bit;
+        for (int i=0;i<ba.length;i++){
+            bit=(ba[i]&0x0f0)>>4;
+            sb.append(chars[bit]);
+            bit=ba[i]&0x0f;
+            sb.append(chars[bit]);
+            sb.append(' ');
+        }
+        return sb.toString().trim();
+    }
+    */
 }
