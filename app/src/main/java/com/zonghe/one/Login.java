@@ -3,7 +3,6 @@ package com.zonghe.one;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,22 +26,17 @@ public class Login extends AppCompatActivity {  //登录界面活动
     private SharedPreferences login_sp;
     private String userNameValue;
     private String passwordValue;
-    private static String userName;
-    private static String userPwd;
     int ranColor;
 
     private UserDataManager mUserDataManager;
 
-    SharedPreferences sprfMain;
-    SharedPreferences.Editor editorMain;
+    //SharedPreferences sprfMain;
+    //SharedPreferences.Editor editorMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Random random=new Random();
-        ranColor=0xff000000|random.nextInt(0x00ffffff);
 
         mAccount = (EditText)findViewById(R.id.login_username);
         mPwd = (EditText)findViewById(R.id.login_password);
@@ -69,8 +63,6 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager.openDataBase();
         }
 
-        userName = mAccount.getText().toString().trim();
-        userPwd = mPwd.getText().toString().trim();
     }
     OnClickListener mListener = new OnClickListener() {
         @Override
@@ -86,6 +78,12 @@ public class Login extends AppCompatActivity {  //登录界面活动
         }
     };
     public void login(){
+
+        Random random=new Random();
+        ranColor=0xff000000|random.nextInt(0x00ffffff);
+
+        String userName = mAccount.getText().toString().trim();
+        String userPwd = mPwd.getText().toString().trim();
         if(isUserNameAndPwdValid()){
             SharedPreferences.Editor editor = login_sp.edit();
             int result = mUserDataManager.findUserByNameAndPwd(userName,userPwd);
@@ -103,8 +101,8 @@ public class Login extends AppCompatActivity {  //登录界面活动
 
                 Intent intent1=new Intent(Login.this,Main.class);
 
-                editorMain.putBoolean("main",true);
-                editorMain.commit();
+                //editorMain.putBoolean("main",true);
+                //editorMain.commit();
 
                 Bundle data=new Bundle();
                 data.putString("username",userName);
@@ -135,7 +133,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager = new UserDataManager(this);
             mUserDataManager.openDataBase();
         }
-
+        /*
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
 
@@ -151,6 +149,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
             Toast.makeText(Login.this, "登陆成功", Toast.LENGTH_SHORT).show();
             Login.this.finish();
         }
+        */
 
         super.onResume();
     }
