@@ -11,10 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.youth.banner.BannerConfig;
-import com.zonghe.one.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -33,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class home_tuijian extends Fragment  {
-    private static String TAG="home_yuijian";
+    private static String TAG="home_tuijian";
     private static bottom_fragment_home context;
     View view;
     Banner tuijian_banner;

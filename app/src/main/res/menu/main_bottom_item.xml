@@ -5,12 +5,12 @@
         android:icon="@drawable/bottom_home"
         android:title=""/>
     <item
-        android:id="@+id/bottom_like"
-        android:icon="@drawable/bottom_like"
+        android:id="@+id/bottom_xiaoyuan"
+        android:icon="@drawable/bottom_xiaoyuan"
         android:title=""/>
     <item
-        android:id="@+id/bottom_search"
-        android:icon="@drawable/main_search"
+        android:id="@+id/bottom_shipin"
+        android:icon="@drawable/bottom_shipin"
         android:title=""/>
     <item
         android:id="@+id/bottom_me"

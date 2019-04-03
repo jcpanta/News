@@ -57,8 +57,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         final ArrayList<Fragment>fgLists=new ArrayList<>(4);
         fgLists.add(bottom_fragment_home.createFragment(this));
-        fgLists.add(bottom_fragment_like.createFragment(this));
-        fgLists.add(bottom_fragment_search.createFragment(this));
+        fgLists.add(bottom_fragment_xiaoyuan.createFragment(this));
+        fgLists.add(bottom_fragment_shipin.createFragment(this));
         fgLists.add(bottom_fragment_me.createFragment(this));
 
         FragmentPagerAdapter mPagerAdapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -85,10 +85,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     case R.id.bottom_home:
                         main_viewPager.setCurrentItem(0);
                         break;
-                    case R.id.bottom_like:
+                    case R.id.bottom_xiaoyuan:
                         main_viewPager.setCurrentItem(1);
                         break;
-                    case R.id.bottom_search:
+                    case R.id.bottom_shipin:
                         main_viewPager.setCurrentItem(2);
                         break;
                     case R.id.bottom_me:
@@ -110,7 +110,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         navigationView.findViewById(R.id.text12).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
         */

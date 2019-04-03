@@ -7,18 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class home_luntan extends Fragment  {
+public class home_junshi extends Fragment  {
     private static bottom_fragment_home context;
     View view;
 
-    public static home_luntan createFragment(bottom_fragment_home home_lt){
-        context = home_lt;
-        return new home_luntan();
+    public static home_junshi createFragment(bottom_fragment_home home_js){
+        context = home_js;
+        return new home_junshi();
     }
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.home_luntan,container,false);
+        view = inflater.inflate(R.layout.home_junshi,container,false);
 
         return view;
     }

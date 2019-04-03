@@ -8,19 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class bottom_fragment_like extends Fragment {
+public class bottom_fragment_xiaoyuan extends Fragment {
     private static Context context;
     View view;
 
-    public static bottom_fragment_like createFragment(Context main_like) {
-        context = main_like;
-        return new bottom_fragment_like();
+    public static bottom_fragment_xiaoyuan createFragment(Context main_xiaoyuan) {
+        context = main_xiaoyuan;
+        return new bottom_fragment_xiaoyuan();
     }
 
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_bottom_like, container, false);
+        view = inflater.inflate(R.layout.main_bottom_xiaoyuan, container, false);
 
         return view;
     }
