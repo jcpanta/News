@@ -33,8 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class home_tuijian extends Fragment  {
-    private static String TAG="home_yuijian";
+    private static String TAG="home_tuijian";
     private static bottom_fragment_home context;
+    private String error_code;
     View view;
     Banner tuijian_banner;
     private String mResult;
@@ -107,17 +108,23 @@ public class home_tuijian extends Fragment  {
                 super.handleMessage(msg);
                 if (msg.what == 1) {
                     handleJsonData(mResult);
-                    mNewsListAdapter=new NewsListAdapter(container,newsList);
-                    mRecyclerView.setAdapter(mNewsListAdapter);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
-                    mNewsListAdapter.setOnItemClickListener(new NewsListAdapter.onItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            Intent intent = new Intent(container.getContext(),NewsDetailActivity.class);
-                            intent.putExtra("NewsURL",newsList.get(position).getURL());
-                            startActivity(intent);
-                        }
-                    });
+
+                    if (error_code==null){
+                        mNewsListAdapter=new NewsListAdapter(container,newsList);
+                        mRecyclerView.setAdapter(mNewsListAdapter);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
+                        mNewsListAdapter.setOnItemClickListener(new NewsListAdapter.onItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent intent = new Intent(container.getContext(),NewsDetailActivity.class);
+                                intent.putExtra("NewsURL",newsList.get(position).getURL());
+                                startActivity(intent);
+                            }
+                        });
+                    }else {
+                        checkErrorCode(error_code);
+                    }
+
                 }
             }
         };
@@ -169,7 +176,7 @@ public class home_tuijian extends Fragment  {
             }
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -180,10 +187,20 @@ public class home_tuijian extends Fragment  {
 
     private void handleJsonData(String result) {
         NewsResult mNewsResult = new NewsResult();
-        try {
 
+        try {
+            //对整个json；
             JSONObject jsonObject = new JSONObject(result);
+             error_code=jsonObject.getString("error_code");
+//            switch (error_code){
+//                case "10012": Toast.makeText(getContext(),"错误的请求KEY",Toast.LENGTH_SHORT).show();return;
+//            }
+
+            Log.d(TAG, "handleJsonData: 错误码error_code=" + error_code);
+
+            //json中的result对象
             JSONObject jsonObject_result = jsonObject.getJSONObject("result");
+
             Log.d(TAG, "handleJsonData: jsonObject_result=" + jsonObject_result);
             JSONArray news = jsonObject_result.getJSONArray("data");
             Log.d(TAG, "handleJsonData: jsoArray('data')" + news);
@@ -199,9 +216,7 @@ public class home_tuijian extends Fragment  {
                 for (int index = 0; index < news.length(); index++) {
                     JSONObject everyNews = (JSONObject) news.get(index);
                     Log.d(TAG, "handleJsonData: firstNews" + everyNews);
-
                     String mUniquekey = everyNews.getString("uniquekey");
-
                     String mTitle = everyNews.getString("title");
                     Log.d(TAG, "handleJsonData: mtitle " + mTitle);
                     String mDate = everyNews.getString("date");
@@ -231,11 +246,28 @@ public class home_tuijian extends Fragment  {
                 mNewsResult.setNews(newsList);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+
         }
     }
 
-
+    public void checkErrorCode(String error_code){
+        switch (error_code){
+            case "10001": Toast.makeText(getContext(),"Error:错误的请求KEY",Toast.LENGTH_SHORT).show();break;
+            case "10002": Toast.makeText(getContext(),"Error:该KEY无请求权限",Toast.LENGTH_SHORT).show();break;
+            case "10003": Toast.makeText(getContext(),"Error:KEY过期",Toast.LENGTH_SHORT).show();break;
+            case "10004": Toast.makeText(getContext(),"Error:错误的OPENID",Toast.LENGTH_SHORT).show();break;
+            case "10005": Toast.makeText(getContext(),"Error:应用未审核超时，请提交认证",Toast.LENGTH_SHORT).show();break;
+            case "10007": Toast.makeText(getContext(),"Error:未知的请求源",Toast.LENGTH_SHORT).show();break;
+            case "10008": Toast.makeText(getContext(),"Error:被禁止的IP",Toast.LENGTH_SHORT).show();break;
+            case "10009": Toast.makeText(getContext(),"Error:被禁止的KEY",Toast.LENGTH_SHORT).show();break;
+            case "10011": Toast.makeText(getContext(),"Error:当前IP请求超过限制",Toast.LENGTH_SHORT).show();break;
+            case "10012": Toast.makeText(getContext(),"Error:请求超过次数限制",Toast.LENGTH_SHORT).show();break;
+            case "10013": Toast.makeText(getContext(),"Error:测试KEY超过请求限制",Toast.LENGTH_SHORT).show();break;
+            case "10014": Toast.makeText(getContext(),"Error:系统内部异常",Toast.LENGTH_SHORT).show();break;
+            case "10020": Toast.makeText(getContext(),"Error:接口维护",Toast.LENGTH_SHORT).show();break;
+            case "10021": Toast.makeText(getContext(),"Error:接口停用",Toast.LENGTH_SHORT).show();break;
+        }
+    }
     public String streamToString(InputStream is) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
