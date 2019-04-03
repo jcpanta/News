@@ -9,6 +9,7 @@ import android.util.Log;
 
 public class UserDataManager {
 
+
     //一些宏定义和声明
     private static final String TAG = "UserDataManager";
     private static final String DB_NAME = "user_data";
@@ -25,7 +26,7 @@ public class UserDataManager {
     //创建用户book表
     private static final String DB_CREATE = "CREATE TABLE " + TABLE_NAME + " ("
             + ID + " integer primary key," + USER_NAME + " varchar,"
-            + USER_PWD + " varchar" + ");";
+            + USER_PWD + " varchar" +");";
 
     private SQLiteDatabase mSQLiteDatabase = null;
     private DataBaseManagementHelper mDatabaseHelper = null;

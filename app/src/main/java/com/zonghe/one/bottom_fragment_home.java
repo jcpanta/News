@@ -15,14 +15,15 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class bottom_fragment_home extends Fragment {
+public class bottom_fragment_home extends Fragment{
     private static Context context;
     View view;
     private List<Fragment> home_list;
     private ViewPager home_viewpager;
     private TabLayout home_tablayout;
     private bottom_fragment_home.MyAdapter home_adapter;
-    private String[] home_title = {"推荐","资讯","论坛"};
+    private String[] home_title = {"推荐","校园"};
+    //TextView home_name;
 
     public static bottom_fragment_home createFragment(Context main_home){
         context = main_home;
@@ -38,20 +39,20 @@ public class bottom_fragment_home extends Fragment {
 
         home_list=new ArrayList<>();
         home_list.add(home_tuijian.createFragment(this));
-        home_list.add(home_zixun.createFragment(this));
-        home_list.add(home_luntan.createFragment(this));
+        home_list.add(home_xiaoyuan.createFragment(this));
+        //home_list.add(home_luntan.createFragment(this));
 
         home_adapter = new MyAdapter(getChildFragmentManager());
         home_viewpager.setAdapter(home_adapter);
         home_viewpager.setOffscreenPageLimit(2);
         home_tablayout.setupWithViewPager(home_viewpager);
-
         return view;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
     class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm){
             super(fm);
