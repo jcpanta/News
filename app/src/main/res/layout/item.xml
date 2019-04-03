@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="3dp"
+            android:foreground="@drawable/card_foreground"
+            >
+                <LinearLayout
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/TV_tital"
+                                    android:text="送美26亿美元大礼！印度订购24架多功能直升机，强化反潜能力"
+                                    android:layout_width="match_parent"
+                                    android:layout_weight="7"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20sp"
+                                    />
+                                <TextView
+                                    android:paddingTop="8dp"
+                                    android:id="@+id/TV_author_name"
+                                    android:text="MC洋洋拍客"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/TV_tital"
+                                    />
+                        </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/IV_thumbnail_pic_s"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_launcher_background"
+                            />
+
+
+                </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
