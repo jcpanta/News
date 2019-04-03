@@ -8,18 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class bottom_fragment_chat extends Fragment {
+public class bottom_fragment_search extends Fragment {
     private static Context context;
     View view;
 
-    public static bottom_fragment_chat createFragment(Context main_chat){
-        context = main_chat;
-        return new bottom_fragment_chat();
+    public static bottom_fragment_search createFragment(Context main_search){
+        context = main_search;
+        return new bottom_fragment_search();
     }
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        view=inflater.inflate(R.layout.main_bottom_chat,container,false);
+        view=inflater.inflate(R.layout.main_bottom_search,container,false);
 
         return view;
     }

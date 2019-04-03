@@ -25,7 +25,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private ViewPager main_viewPager;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    TextView main_name;
+    TextView home_name;
     ImageButton main_search;
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
@@ -58,7 +58,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         final ArrayList<Fragment>fgLists=new ArrayList<>(4);
         fgLists.add(bottom_fragment_home.createFragment(this));
         fgLists.add(bottom_fragment_like.createFragment(this));
-        fgLists.add(bottom_fragment_chat.createFragment(this));
+        fgLists.add(bottom_fragment_search.createFragment(this));
         fgLists.add(bottom_fragment_me.createFragment(this));
 
         FragmentPagerAdapter mPagerAdapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -88,7 +88,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     case R.id.bottom_like:
                         main_viewPager.setCurrentItem(1);
                         break;
-                    case R.id.bottom_chat:
+                    case R.id.bottom_search:
                         main_viewPager.setCurrentItem(2);
                         break;
                     case R.id.bottom_me:
@@ -103,8 +103,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         drawerLayout=(DrawerLayout)findViewById(R.id.main);
         navigationView=(NavigationView)findViewById(R.id.main_side_left);
         View side_main=navigationView.getHeaderView(0);
-        main_name =(TextView)findViewById(R.id.main_name);
-        main_name.setOnClickListener(this);
+        home_name =(TextView)findViewById(R.id.main_name);
+        home_name.setOnClickListener(this);
+
+        /*
+        navigationView.findViewById(R.id.text12).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+        */
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -147,7 +156,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -160,7 +168,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
-
     @Override
     public void  onPointerCaptureChanged(boolean hasCapture){
     }
@@ -173,4 +180,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         editorMain.commit();
     }
     */
+    public void setDrawerLayout(DrawerLayout drawerLayout){
+        this.drawerLayout=drawerLayout;
+    }
+    public DrawerLayout getDrawerLayout(){
+        return this.drawerLayout;
+    }
 }

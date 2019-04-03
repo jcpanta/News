@@ -9,8 +9,8 @@
         android:icon="@drawable/bottom_like"
         android:title=""/>
     <item
-        android:id="@+id/bottom_chat"
-        android:icon="@drawable/bottom_chat"
+        android:id="@+id/bottom_search"
+        android:icon="@drawable/main_search"
         android:title=""/>
     <item
         android:id="@+id/bottom_me"

@@ -7,18 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class home_zixun extends Fragment  {
+public class home_xiaoyuan extends Fragment  {
     private static bottom_fragment_home context;
     View view;
 
-    public static home_zixun createFragment(bottom_fragment_home home_zx){
-        context = home_zx;
-        return new home_zixun();
+    public static home_xiaoyuan createFragment(bottom_fragment_home home_xy){
+        context = home_xy;
+        return new home_xiaoyuan();
     }
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.home_zixun,container,false);
+        view = inflater.inflate(R.layout.home_xiaoyuan,container,false);
 
         return view;
     }
