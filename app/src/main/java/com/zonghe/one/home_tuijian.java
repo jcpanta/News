@@ -1,4 +1,5 @@
 package com.zonghe.one;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,11 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Toast;
 
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,10 +95,11 @@ public class home_tuijian extends Fragment  {
                 }
             }
         });
-        //蒋recyclerView开始
 
+        //蒋recyclerView开始
         findViews();
-//主线程创建Handler，接收子线程的信息。
+        //主线程创建Handler，接收子线程的信息。
+
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -135,9 +137,6 @@ public class home_tuijian extends Fragment  {
                 handler.sendEmptyMessage(1);
             }
         }).start();
-
-
-
         //蒋recyclerview结尾
 
         return view;
