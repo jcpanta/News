@@ -28,8 +28,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private ViewPager main_viewPager;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    TextView home_name;
-    ImageButton main_search;
+    private TextView home_name;
+    private ImageButton main_search;
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
 
@@ -38,6 +38,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instance=this;
+        main_search=(ImageButton)findViewById(R.id.main_search);
+        main_search.setOnClickListener(this);
         //底部导航栏
         main_viewPager=(ViewPager)findViewById(R.id.main_viewpager);
         main_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -60,8 +62,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         final ArrayList<Fragment>fgLists=new ArrayList<>(4);
         fgLists.add(bottom_fragment_home.createFragment(this));
-        fgLists.add(bottom_fragment_like.createFragment(this));
-        fgLists.add(bottom_fragment_search.createFragment(this));
+        fgLists.add(bottom_fragment_xiaoyuan.createFragment(this));
+        fgLists.add(bottom_fragment_shipin.createFragment(this));
         fgLists.add(bottom_fragment_me.createFragment(this));
 
         FragmentPagerAdapter mPagerAdapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -88,10 +90,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     case R.id.bottom_home:
                         main_viewPager.setCurrentItem(0);
                         break;
-                    case R.id.bottom_like:
+                    case R.id.bottom_xiaoyuan:
                         main_viewPager.setCurrentItem(1);
                         break;
-                    case R.id.bottom_search:
+                    case R.id.bottom_shipin:
                         main_viewPager.setCurrentItem(2);
                         break;
                     case R.id.bottom_me:
@@ -113,7 +115,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         navigationView.findViewById(R.id.text12).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
         */
@@ -159,6 +161,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -169,25 +172,28 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     drawerLayout.openDrawer(navigationView);
                 }
                 break;
+            case R.id.main_search:
+                startActivity(new Intent(Main.this,Search.class));
+                break;
         }
     }
     @Override
     public void  onPointerCaptureChanged(boolean hasCapture){
     }
 
-    /*
-    public void resetSprfMain(){
-        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
-        editorMain=sprfMain.edit();
-        editorMain.putBoolean("main",false);
-        editorMain.commit();
-    }
-    */
-    public void setDrawerLayout(DrawerLayout drawerLayout){
-        this.drawerLayout=drawerLayout;
-    }
-    public DrawerLayout getDrawerLayout(){
-        return this.drawerLayout;
-    }
+
+//    public void resetSprfMain(){
+//        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+//        editorMain=sprfMain.edit();
+//        editorMain.putBoolean("main",false);
+//        editorMain.commit();
+//    }
+//
+//    public void setDrawerLayout(DrawerLayout drawerLayout){
+//        this.drawerLayout=drawerLayout;
+//    }
+//    public DrawerLayout getDrawerLayout(){
+//        return this.drawerLayout;
+//    }
 
 }

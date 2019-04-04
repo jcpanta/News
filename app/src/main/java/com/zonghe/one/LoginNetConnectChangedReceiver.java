@@ -78,7 +78,6 @@ public class LoginNetConnectChangedReceiver extends BroadcastReceiver {
                     dialog.setPositiveButton("返回", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Login.instance.finish();
                             dialog.cancel();
                         }
                     });

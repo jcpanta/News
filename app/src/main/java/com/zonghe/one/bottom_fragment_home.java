@@ -22,7 +22,7 @@ public class bottom_fragment_home extends Fragment{
     private ViewPager home_viewpager;
     private TabLayout home_tablayout;
     private bottom_fragment_home.MyAdapter home_adapter;
-    private String[] home_title = {"推荐","校园"};
+    private String[] home_title = {"头条","娱乐","军事","体育","科技"};
     //TextView home_name;
 
     public static bottom_fragment_home createFragment(Context main_home){
@@ -39,12 +39,14 @@ public class bottom_fragment_home extends Fragment{
 
         home_list=new ArrayList<>();
         home_list.add(home_tuijian.createFragment(this));
-        home_list.add(home_xiaoyuan.createFragment(this));
-        //home_list.add(home_luntan.createFragment(this));
+        home_list.add(home_yule.createFragment(this));
+        home_list.add(home_junshi.createFragment(this));
+        home_list.add(home_tiyu.createFragment(this));
+        home_list.add(home_keji.createFragment(this));
 
         home_adapter = new MyAdapter(getChildFragmentManager());
         home_viewpager.setAdapter(home_adapter);
-        home_viewpager.setOffscreenPageLimit(2);
+        home_viewpager.setOffscreenPageLimit(3);
         home_tablayout.setupWithViewPager(home_viewpager);
         return view;
     }

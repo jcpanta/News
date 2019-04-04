@@ -1,5 +1,6 @@
-package com.iaovy.dream;
+package com.zonghe.one;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,18 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class chat_wo extends Fragment {
-    private static bottom_fragment_chat contex;
+public class bottom_fragment_shipin extends Fragment {
+    private static Context context;
     View view;
 
-    public static com.iaovy.dream.chat_wo createFragment(bottom_fragment_chat chat_w){
-        contex=chat_w;
-        return new com.iaovy.dream.chat_wo();
+    public static bottom_fragment_shipin createFragment(Context main_shipin){
+        context = main_shipin;
+        return new bottom_fragment_shipin();
     }
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.chat_wo,container,false);
+        view=inflater.inflate(R.layout.main_bottom_shipin,container,false);
+
         return view;
     }
     @Override
