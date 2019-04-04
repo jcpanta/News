@@ -32,7 +32,6 @@
                 android:textColor="@color/main_side"
                 android:textSize="20sp"
                 android:layout_centerVertical="true"/>
-
             <ImageButton
                 android:id="@+id/main_search"
                 android:layout_width="22dp"

@@ -25,8 +25,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private ViewPager main_viewPager;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    TextView home_name;
-    ImageButton main_search;
+    private TextView home_name;
+    private ImageButton main_search;
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
 
@@ -34,6 +34,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        main_search=(ImageButton)findViewById(R.id.main_search);
+        main_search.setOnClickListener(this);
 
         //底部导航栏
         main_viewPager=(ViewPager)findViewById(R.id.main_viewpager);
@@ -156,6 +159,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -165,6 +169,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }else{
                     drawerLayout.openDrawer(navigationView);
                 }
+                break;
+            case R.id.main_search:
+                startActivity(new Intent(Main.this,Search.class));
                 break;
         }
     }
@@ -180,10 +187,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         editorMain.commit();
     }
     */
+    /*
     public void setDrawerLayout(DrawerLayout drawerLayout){
         this.drawerLayout=drawerLayout;
     }
     public DrawerLayout getDrawerLayout(){
         return this.drawerLayout;
     }
+    */
 }
