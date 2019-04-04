@@ -1,7 +1,10 @@
 package com.zonghe.one;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,14 +18,14 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class Login extends AppCompatActivity {  //登录界面活动
-
+    public static Login instance;
+    private NetWork mNetWork;
     public int pwdresetFlag=0;
     private EditText mAccount;  //用户名
     private EditText mPwd;  //密码
     private Button mLoginButton; //登录按钮
     private TextView mSignButton; //注册按钮
     private CheckBox mRememberCheck;
-
     private SharedPreferences login_sp;
     private String userNameValue;
     private String passwordValue;
@@ -37,6 +40,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        instance=this;
 
         mAccount = (EditText)findViewById(R.id.login_username);
         mPwd = (EditText)findViewById(R.id.login_password);
@@ -65,16 +69,21 @@ public class Login extends AppCompatActivity {  //登录界面活动
 
     }
     OnClickListener mListener = new OnClickListener() {
+
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.login_login:
-                    login();
-                    break;
-                case R.id.login_sign:
-                    startActivity(new Intent(Login.this,Sign.class));
-                    break;
+            CheckNetRegisterReceiver();
+            if (mNetWork.isNetConnected(Login.this)){
+                switch (view.getId()){
+                    case R.id.login_login:
+                        login();
+                        break;
+                    case R.id.login_sign:
+                        startActivity(new Intent(Login.this,Sign.class));
+                        break;
+                }
             }
+
         }
     };
     public void login(){
@@ -133,6 +142,8 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager = new UserDataManager(this);
             mUserDataManager.openDataBase();
         }
+
+
         /*
         sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
         editorMain=sprfMain.edit();
@@ -164,5 +175,12 @@ public class Login extends AppCompatActivity {  //登录界面活动
             mUserDataManager = null;
         }
         super.onPause();
+    }
+    private void CheckNetRegisterReceiver(){
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        LoginNetConnectChangedReceiver mLoginNetConnectChangedReceiver =new LoginNetConnectChangedReceiver();
+        registerReceiver(mLoginNetConnectChangedReceiver,filter);
     }
 }

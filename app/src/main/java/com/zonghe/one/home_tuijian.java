@@ -12,12 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.youth.banner.BannerConfig;
 import com.zonghe.one.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,18 +29,16 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 public class home_tuijian extends Fragment  {
     private static String TAG="home_tuijian";
     private static bottom_fragment_home context;
-    private String error_code;
+    private int error_code;
     View view;
     Banner tuijian_banner;
     private String mResult;
     private List<NewsResult.News> newsList;
     private RecyclerView mRecyclerView;
     private NewsListAdapter mNewsListAdapter;
-
     public static home_tuijian createFragment(bottom_fragment_home home_tj){
         context = home_tj;
         return new home_tuijian();
@@ -108,8 +104,9 @@ public class home_tuijian extends Fragment  {
                 super.handleMessage(msg);
                 if (msg.what == 1) {
                     handleJsonData(mResult);
-
-                    if (error_code==null){
+                    Log.d(TAG, "handleMessage:错误问题error_code"+error_code);
+                    if (error_code==0){
+                        Log.d(TAG, "handleMessage: aaaaaa嗷啊啊啊啊嗷"+error_code);
                         mNewsListAdapter=new NewsListAdapter(container,newsList);
                         mRecyclerView.setAdapter(mNewsListAdapter);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
@@ -133,7 +130,6 @@ public class home_tuijian extends Fragment  {
             @Override
             public void run() {
                 requestDataByGet();
-
                 Log.d(TAG, "run: 从网上获得json数据="+mResult);
                 //完成下载json后通知主线程去解析。
                 handler.sendEmptyMessage(1);
@@ -191,7 +187,7 @@ public class home_tuijian extends Fragment  {
         try {
             //对整个json；
             JSONObject jsonObject = new JSONObject(result);
-             error_code=jsonObject.getString("error_code");
+             error_code=jsonObject.getInt("error_code");
 //            switch (error_code){
 //                case "10012": Toast.makeText(getContext(),"错误的请求KEY",Toast.LENGTH_SHORT).show();return;
 //            }
@@ -250,22 +246,22 @@ public class home_tuijian extends Fragment  {
         }
     }
 
-    public void checkErrorCode(String error_code){
+    public void checkErrorCode(int error_code){
         switch (error_code){
-            case "10001": Toast.makeText(getContext(),"Error:错误的请求KEY",Toast.LENGTH_SHORT).show();break;
-            case "10002": Toast.makeText(getContext(),"Error:该KEY无请求权限",Toast.LENGTH_SHORT).show();break;
-            case "10003": Toast.makeText(getContext(),"Error:KEY过期",Toast.LENGTH_SHORT).show();break;
-            case "10004": Toast.makeText(getContext(),"Error:错误的OPENID",Toast.LENGTH_SHORT).show();break;
-            case "10005": Toast.makeText(getContext(),"Error:应用未审核超时，请提交认证",Toast.LENGTH_SHORT).show();break;
-            case "10007": Toast.makeText(getContext(),"Error:未知的请求源",Toast.LENGTH_SHORT).show();break;
-            case "10008": Toast.makeText(getContext(),"Error:被禁止的IP",Toast.LENGTH_SHORT).show();break;
-            case "10009": Toast.makeText(getContext(),"Error:被禁止的KEY",Toast.LENGTH_SHORT).show();break;
-            case "10011": Toast.makeText(getContext(),"Error:当前IP请求超过限制",Toast.LENGTH_SHORT).show();break;
-            case "10012": Toast.makeText(getContext(),"Error:请求超过次数限制",Toast.LENGTH_SHORT).show();break;
-            case "10013": Toast.makeText(getContext(),"Error:测试KEY超过请求限制",Toast.LENGTH_SHORT).show();break;
-            case "10014": Toast.makeText(getContext(),"Error:系统内部异常",Toast.LENGTH_SHORT).show();break;
-            case "10020": Toast.makeText(getContext(),"Error:接口维护",Toast.LENGTH_SHORT).show();break;
-            case "10021": Toast.makeText(getContext(),"Error:接口停用",Toast.LENGTH_SHORT).show();break;
+            case 10001: Toast.makeText(getContext(),"Error:错误的请求KEY",Toast.LENGTH_SHORT).show();break;
+            case 10002: Toast.makeText(getContext(),"Error:该KEY无请求权限",Toast.LENGTH_SHORT).show();break;
+            case 10003: Toast.makeText(getContext(),"Error:KEY过期",Toast.LENGTH_SHORT).show();break;
+            case 10004: Toast.makeText(getContext(),"Error:错误的OPENID",Toast.LENGTH_SHORT).show();break;
+            case 10005: Toast.makeText(getContext(),"Error:应用未审核超时，请提交认证",Toast.LENGTH_SHORT).show();break;
+            case 10007: Toast.makeText(getContext(),"Error:未知的请求源",Toast.LENGTH_SHORT).show();break;
+            case 10008: Toast.makeText(getContext(),"Error:被禁止的IP",Toast.LENGTH_SHORT).show();break;
+            case 10009: Toast.makeText(getContext(),"Error:被禁止的KEY",Toast.LENGTH_SHORT).show();break;
+            case 10011: Toast.makeText(getContext(),"Error:当前IP请求超过限制",Toast.LENGTH_SHORT).show();break;
+            case 10012: Toast.makeText(getContext(),"Error:请求超过次数限制",Toast.LENGTH_SHORT).show();break;
+            case 10013: Toast.makeText(getContext(),"Error:测试KEY超过请求限制",Toast.LENGTH_SHORT).show();break;
+            case 10014: Toast.makeText(getContext(),"Error:系统内部异常",Toast.LENGTH_SHORT).show();break;
+            case 10020: Toast.makeText(getContext(),"Error:接口维护",Toast.LENGTH_SHORT).show();break;
+            case 10021: Toast.makeText(getContext(),"Error:接口停用",Toast.LENGTH_SHORT).show();break;
         }
     }
     public String streamToString(InputStream is) {

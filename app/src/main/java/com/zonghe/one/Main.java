@@ -1,7 +1,10 @@
 package com.zonghe.one;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,7 +23,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
-
+    public static Main instance;
     private BottomNavigationView main_bottomnavigation;
     private ViewPager main_viewPager;
     private DrawerLayout drawerLayout;
@@ -34,7 +37,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        instance=this;
         //底部导航栏
         main_viewPager=(ViewPager)findViewById(R.id.main_viewpager);
         main_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -186,4 +189,5 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public DrawerLayout getDrawerLayout(){
         return this.drawerLayout;
     }
+
 }
