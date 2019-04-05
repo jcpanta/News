@@ -46,7 +46,7 @@ public class bottom_fragment_home extends Fragment{
 
         home_adapter = new MyAdapter(getChildFragmentManager());
         home_viewpager.setAdapter(home_adapter);
-        home_viewpager.setOffscreenPageLimit(3);
+        home_viewpager.setOffscreenPageLimit(5);
         home_tablayout.setupWithViewPager(home_viewpager);
         return view;
     }

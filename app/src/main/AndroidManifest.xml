@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Search"></activity>
         <activity android:name=".NewsDetailActivity" />
         <activity android:name=".Main" />
         <activity android:name=".Sign" />

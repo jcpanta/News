@@ -33,12 +33,11 @@ public class EditText_Clear extends android.support.v7.widget.AppCompatEditText 
      */
     private void init() {
         clearDrawable = getResources().getDrawable(R.drawable.search_delete);
-        searchDrawable = getResources().getDrawable(R.drawable.search_search);
+        //searchDrawable = getResources().getDrawable(R.drawable.search_search);
         //clearDrawable.setBounds(0,0,24,24);
         //searchDrawable.setBounds(0,0,24,24);
 
-        setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null,
-                null, null);
+        //setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null, null, null);
         // setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom)介绍
         // 作用：在EditText上、下、左、右设置图标（相当于android:drawableLeft=""  android:drawableRight=""）
         // 注1：setCompoundDrawablesWithIntrinsicBounds（）传入的Drawable的宽高=固有宽高（自动通过getIntrinsicWidth（）& getIntrinsicHeight（）获取）
