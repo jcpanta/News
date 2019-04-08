@@ -1,9 +1,9 @@
 package com.zonghe.one;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 import com.zonghe.one.JSONNewsEntityClass.Contentlist;
 import com.zonghe.one.JSONNewsEntityClass.Imageurls;
 
@@ -29,13 +31,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class home_tiyu extends Fragment  {
+public class home_toutiao_activity extends Fragment  {
+    private static String TAG="home_toutiao";
     private static bottom_fragment_home context;
-    private static final String TAG = "home_tiyu" ;
     View view;
+    Banner toutiao_banner;
+
     private String jsonString;
     private int showapi_res_code;
     private String showapi_res_error;
@@ -44,15 +47,65 @@ public class home_tiyu extends Fragment  {
     private List<Contentlist> mContentlistList;
     private List<Imageurls> mImageurlsList;
 
-    public static home_tiyu createFragment(bottom_fragment_home home_ty){
-        context = home_ty;
-        return new home_tiyu();
+
+    public static home_toutiao_activity createFragment(bottom_fragment_home home_tj){
+        context = home_tj;
+        return new home_toutiao_activity();
     }
     @Override
     @Nullable
-    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.home_tiyu,container,false);
-        mRecyclerView =view.findViewById(R.id.RecyclerView_tiyu);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState){
+        view = inflater.inflate(R.layout.activity_home_toutiao,container,false);
+        List images = new ArrayList();
+        images.add(R.drawable.advertisment1);
+        images.add(R.drawable.advertisment2);
+        images.add(R.drawable.advertisment3);
+        images.add(R.drawable.advertisment4);
+
+        /*
+        List titles=new ArrayList();
+        titles.add(R.string.banner_images1);
+        titles.add(R.string.banner_images2);
+        titles.add(R.string.banner_images3);
+        titles.add(R.string.banner_images4);
+        */
+
+        toutiao_banner= (Banner)view.findViewById(R.id.banner);
+        //设置图片加载器
+        toutiao_banner.setImageLoader(new GlideImageLoader());
+        //设置图片集合
+        toutiao_banner.setImages(images);
+
+        //设置title集合
+        // tuijian_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        // tuijian_banner.setBannerTitles(titles);
+
+        //banner设置方法全部调用完毕时最后调用
+        toutiao_banner.start();
+
+        //增加点击事件
+        toutiao_banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                switch (position){
+                    case 0:
+                        //startActivity(new Intent(getActivity(),));
+                        break;
+                    case 1:
+                        //startActivity(new Intent(getActivity(),));
+                        break;
+                    case 2:
+                        //startActivity(new Intent(getActivity(),));
+                        break;
+                    case 3:
+                        //startActivity(new Intent(getActivity(),));
+                        break;
+                }
+            }
+        });
+        //蒋recyclerView开始
+
+        mRecyclerView =view.findViewById(R.id.RecyclerView_toutiao);
         final Handler handler = new Handler(){
 
             public void handleMessage (Message msg){
@@ -92,12 +145,26 @@ public class home_tiyu extends Fragment  {
                 handler.sendEmptyMessage(1);
             }
         }).start();
+
+
+
+        //蒋recyclerview结尾
+
         return view;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+
+
     public String streamToString(InputStream is) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -118,9 +185,10 @@ public class home_tiyu extends Fragment  {
     private void requestDataByGet() {
         String appid="91287";//要替换成自己的
         String secret="aece97a8085e42f398fa0f39ff8d2cea";//要替换成自己的
-        String channelName = "体育焦点";
+        //String channelName = "\";
+        String title  ="头条";
         try {
-            URL url = new URL("https://route.showapi.com/109-35?channelId=&channelName="+channelName+"&id=&maxResult=20&needAllList=0&needContent=0&needHtml=1&page=1&showapi_appid="+appid+"&showapi_timestamp=&title=&showapi_sign="+secret);
+            URL url = new URL("https://route.showapi.com/109-35?channelId=&channelName=&id=&maxResult=20&needAllList=0&needContent=0&needHtml=1&page=1&showapi_appid="+appid+"&showapi_timestamp=&title="+title+"&showapi_sign="+secret);
             Log.d(TAG, "requestDataByGet: url="+url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(30*1000);
@@ -197,4 +265,7 @@ public class home_tiyu extends Fragment  {
             Log.d(TAG, "handleJsonData: 解析出错！！");
         }
     }
+
 }
+
+

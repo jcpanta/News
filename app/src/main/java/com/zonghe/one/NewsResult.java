@@ -30,7 +30,6 @@ public class NewsResult {
                 '}';
     }
 
-
     public static class News{
         private String muniquekey;
         private String mTitle;

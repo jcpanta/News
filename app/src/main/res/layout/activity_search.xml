@@ -26,9 +26,16 @@
             android:layout_toEndOf="@id/search_back"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="32dp"
+            android:hint="   今日热点"
             android:imeOptions="actionSearch"
             android:singleLine="true"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/search_News_TextView"
+        android:layout_below="@id/search_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,5 +62,15 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"/>
         </RelativeLayout>
+
     </android.support.v4.widget.NestedScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RecyclerView_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/banner"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:nestedScrollingEnabled="false">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

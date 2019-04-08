@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ public class home_tuijian extends Fragment  {
     private static String TAG="home_tuijian";
     private static bottom_fragment_home context;
     private int error_code;
+
     View view;
     Banner tuijian_banner;
     private String mResult;
@@ -106,7 +108,8 @@ public class home_tuijian extends Fragment  {
                     handleJsonData(mResult);
                     Log.d(TAG, "handleMessage:错误问题error_code"+error_code);
                     if (error_code==0){
-                        Log.d(TAG, "handleMessage: aaaaaa嗷啊啊啊啊嗷"+error_code);
+
+                        Log.d(TAG, "handleMessage: newList"+newsList);
                         mNewsListAdapter=new NewsListAdapter(container,newsList);
                         mRecyclerView.setAdapter(mNewsListAdapter);
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false));
@@ -121,7 +124,6 @@ public class home_tuijian extends Fragment  {
                     }else {
                         checkErrorCode(error_code);
                     }
-
                 }
             }
         };
@@ -130,7 +132,6 @@ public class home_tuijian extends Fragment  {
             @Override
             public void run() {
                 requestDataByGet();
-                Log.d(TAG, "run: 从网上获得json数据="+mResult);
                 //完成下载json后通知主线程去解析。
                 handler.sendEmptyMessage(1);
             }
@@ -146,6 +147,13 @@ public class home_tuijian extends Fragment  {
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
     private void findViews() {
         mRecyclerView =view.findViewById(R.id.RecyclerView_News);
 
@@ -183,7 +191,6 @@ public class home_tuijian extends Fragment  {
 
     private void handleJsonData(String result) {
         NewsResult mNewsResult = new NewsResult();
-
         try {
             //对整个json；
             JSONObject jsonObject = new JSONObject(result);
@@ -239,6 +246,7 @@ public class home_tuijian extends Fragment  {
 
                     newsList.add(NewsItem);
                 }
+                Log.d(TAG, "handleJsonData: 啊啊啊newsList = "+newsList);
                 mNewsResult.setNews(newsList);
             }
         } catch (JSONException e) {

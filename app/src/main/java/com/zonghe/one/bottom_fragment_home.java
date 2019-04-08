@@ -38,12 +38,11 @@ public class bottom_fragment_home extends Fragment{
         home_tablayout=(TabLayout)view.findViewById(R.id.home_tablayout);
 
         home_list=new ArrayList<>();
-        home_list.add(home_tuijian.createFragment(this));
+        home_list.add(home_toutiao_activity.createFragment(this));
         home_list.add(home_yule.createFragment(this));
         home_list.add(home_junshi.createFragment(this));
         home_list.add(home_tiyu.createFragment(this));
         home_list.add(home_keji.createFragment(this));
-
         home_adapter = new MyAdapter(getChildFragmentManager());
         home_viewpager.setAdapter(home_adapter);
         home_viewpager.setOffscreenPageLimit(3);

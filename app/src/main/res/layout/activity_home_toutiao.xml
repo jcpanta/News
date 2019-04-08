@@ -7,23 +7,22 @@
     android:orientation="vertical">
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <!--<com.youth.banner.Banner-->
-                <!--android:id="@+id/banner"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="144dp">-->
-            <!--</com.youth.banner.Banner>-->
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="144dp">
+            </com.youth.banner.Banner>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/RecyclerView_junshi"
+                android:id="@+id/RecyclerView_toutiao"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/banner"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="0dp"
-                android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
+                android:nestedScrollingEnabled="false">
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
