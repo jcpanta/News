@@ -45,7 +45,7 @@ public class bottom_fragment_home extends Fragment{
         home_list.add(home_keji.createFragment(this));
         home_adapter = new MyAdapter(getChildFragmentManager());
         home_viewpager.setAdapter(home_adapter);
-        home_viewpager.setOffscreenPageLimit(3);
+        home_viewpager.setOffscreenPageLimit(5);
         home_tablayout.setupWithViewPager(home_viewpager);
         return view;
     }

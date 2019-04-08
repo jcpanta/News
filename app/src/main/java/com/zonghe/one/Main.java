@@ -1,10 +1,8 @@
 package com.zonghe.one;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,9 +11,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +37,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
 
+    private ICallBack iCallBack;
+    private BCallBack bCallBack;
+    private Context mContext;
+    private AlertDialog alertDialog;
+    private NetWork mNetWork;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this.getApplicationContext();
         instance=this;
         main_search=(ImageButton)findViewById(R.id.main_search);
         main_search.setOnClickListener(this);
@@ -79,7 +90,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         };
 
         main_viewPager.setAdapter(mPagerAdapter);
-        main_viewPager.setOffscreenPageLimit(2);
+        main_viewPager.setOffscreenPageLimit(4);
 
         main_bottomnavigation=(BottomNavigationView)findViewById(R.id.main_bottomnavigation);
         //BottomNavigationViewHelper.disableShiftMode(main_bottomnavigation);
@@ -173,7 +184,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.main_search:
-                startActivity(new Intent(Main.this,Search.class));
+                alert_edit(v);
                 break;
         }
     }
@@ -181,19 +192,77 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void  onPointerCaptureChanged(boolean hasCapture){
     }
 
+    public void alert_edit(View view){
+        /*
+        TextView title=new TextView(this);
+        title.setText("搜索");
+        title.setPadding(10,30,10,10);
+        title.setTextSize(18);
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(getResources().getColor(R.color.colorPrimary));
+        */
+        final EditText_Clear editText=new EditText_Clear(this);
+        editText.setTextSize(14);
+        editText.setSingleLine(true);
+        editText.setHint("搜索");
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (!mNetWork.isNetConnected(mContext)){
+                        Toast.makeText(mContext,"请连接网络！",Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
 
-//    public void resetSprfMain(){
-//        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
-//        editorMain=sprfMain.edit();
-//        editorMain.putBoolean("main",false);
-//        editorMain.commit();
-//    }
-//
-//    public void setDrawerLayout(DrawerLayout drawerLayout){
-//        this.drawerLayout=drawerLayout;
-//    }
-//    public DrawerLayout getDrawerLayout(){
-//        return this.drawerLayout;
-//    }
+                    String searchString="热点";
+                    if (editText.getText()!=null){
+                         searchString =editText.getText().toString();
+                    }
+                    Intent intent = new Intent(mContext,SearchResultActivity.class);
+                    intent.putExtra("searchString",searchString);
+                    startActivity(intent);
+                    if (!(iCallBack == null)){
+                        iCallBack.SearchAciton(editText.getText().toString());
+                    }
+                    //startActivity(new Intent(Main.this,));
+                    Toast.makeText(Main.this, "需要搜索的是" + editText.getText(), Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        //builder.setCustomTitle(title);
+        builder.setView(editText);
+        //builder.setPositiveButton("确定",null);
+         alertDialog=builder.create();
+        Window window=alertDialog.getWindow();
+        WindowManager.LayoutParams layoutParams=alertDialog.getWindow().getAttributes();
+        window.setGravity(Gravity.TOP);
+        layoutParams.height=40;
+        layoutParams.y=280;
+        alertDialog.getWindow().setAttributes(layoutParams);
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alertDialog.show();
+    }
 
+    // 搜索按键回调接口
+    public interface ICallBack {
+        void SearchAciton(String string);
+    }
+    // 返回按键接口回调
+    public void setOnClickBack(BCallBack bCallBack){
+        this.bCallBack = bCallBack;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(alertDialog != null) {
+            alertDialog.dismiss();
+        }
+        super.onDestroy();
+    }
 }

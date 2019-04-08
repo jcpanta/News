@@ -13,14 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".home_toutiao_activity"></activity>
+        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".home_toutiao_activity" />
         <activity android:name=".every_news_activity" />
-        <activity android:name=".BigImageActivity" />
-        <activity android:name=".Search" />
+        <activity android:name=".BigImageActivity" /> <!-- <activity android:name=".Search" /> -->
         <activity android:name=".NewsDetailActivity" />
-        <activity android:name=".Main">
-
-        </activity>
+        <activity android:name=".Main"></activity>
         <activity android:name=".Sign" />
         <activity android:name=".Login">
             <intent-filter>

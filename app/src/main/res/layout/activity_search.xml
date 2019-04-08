@@ -57,7 +57,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="4dp"
                 style="?android:attr/borderlessButtonStyle"
-                android:background="@drawable/button_search_clear"
                 android:text="清除搜索记录"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"/>
