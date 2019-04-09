@@ -42,15 +42,9 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="wrap_content"
         android:layout_below="@id/everynews_top">
-=======
-        android:layout_height="match_parent"
-        android:layout_below="@id/everynews_top"
-        android:layout_marginTop="-1dp">
 
->>>>>>> 34fcb7c162612167129ebe535dabf1d422b285e8
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
