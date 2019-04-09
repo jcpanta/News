@@ -9,8 +9,7 @@
     <RelativeLayout
         android:id="@+id/everynews_top"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#FFFFFF">
+        android:layout_height="40dp">
         <ImageButton
             android:id="@+id/everynews_back"
             android:layout_width="20dp"
@@ -18,66 +17,89 @@
             android:background="@drawable/back"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="4dp"/>
+            android:layout_marginStart="8dp"/>
+        <Button
+            android:layout_marginVertical="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="Pt"
+            android:textAllCaps="false"
+            android:minHeight="22dp"
+            android:minWidth="64dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_pt"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorLine"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/everynews_top">
+        android:layout_below="@id/everynews_top"
+        android:layout_marginTop="-1dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:id="@+id/everynews_RL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@color/colorWhite"
-                android:paddingHorizontal="8dp"
-                android:layout_marginTop="8dp">
+                android:paddingHorizontal="8dp">
+
                 <TextView
                     android:id="@+id/everynews_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="天府通致歉！市民可下载致歉信做迟到证明"
-                    android:textSize="24sp"
-                    android:textColor="@color/colorText" />
+                    android:textColor="@color/colorText"
+                    android:textSize="24sp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:layout_alignParentBottom="true"
                     android:layout_below="@id/everynews_title"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="16dp">
+
                     <TextView
                         android:id="@+id/everynews_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="川报观察"
-                        android:textSize="10sp"
-                        android:textColor="@color/colorText2"/>
+                        android:textColor="@color/colorText2"
+                        android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/everynews_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/everynews_author"
                         android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@id/everynews_author"
                         android:text="16小时前"
-                        android:textSize="10sp"
-                        android:textColor="@color/colorText2"/>
+                        android:textColor="@color/colorText2"
+                        android:textSize="10sp" />
                 </RelativeLayout>
             </RelativeLayout>
             <WebView
                 android:id="@+id/newsDetailWebView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:ignore="MissingConstraints"
                 android:layout_below="@id/everynews_RL"
-                android:layout_marginTop="24dp"/>
+                android:layout_marginTop="24dp"
+                tools:ignore="MissingConstraints" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
