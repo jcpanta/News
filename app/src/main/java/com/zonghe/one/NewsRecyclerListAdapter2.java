@@ -49,7 +49,6 @@ public class NewsRecyclerListAdapter2 extends RecyclerView.Adapter<NewsRecyclerL
 
     public itemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        Log.d(TAG, "onCreateViewHolder: i是"+i);
         switch (i){
             case 0:View itemView0 = View.inflate(viewGroup.getContext(),R.layout.item_none_img,null);return  new itemViewHolder(itemView0);
             case 1:View itemView1 = View.inflate(viewGroup.getContext(),R.layout.item_one_img,null);return  new itemViewHolder(itemView1);
@@ -64,8 +63,6 @@ public class NewsRecyclerListAdapter2 extends RecyclerView.Adapter<NewsRecyclerL
     public void onBindViewHolder(@NonNull itemViewHolder itemViewHolder, final int i) {
                 itemViewHolder.itemNewstitle.setText(mContentlists.get(i).getTitle());
                 itemViewHolder.itemNewsAuthor.setText(mContentlists.get(i).getSource());
-        Log.d(TAG, "onBindViewHolder: i2是"+i);
-        Log.d(TAG, "onBindViewHolder: 222image_number="+image_number);
 
 
         if (image_number!=0){
@@ -100,7 +97,7 @@ public class NewsRecyclerListAdapter2 extends RecyclerView.Adapter<NewsRecyclerL
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: "+mContentlists.size());
+        //Log.d(TAG, "getItemCount: "+mContentlists.size());
         return mContentlists.size();
 
     }

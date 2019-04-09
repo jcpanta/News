@@ -2,6 +2,7 @@
   * Copyright 2019 bejson.com 
   */
 package com.zonghe.one.JSONNewsEntityClass;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Contentlist {
+public class Contentlist implements Serializable{
 
     private String pubDate;
     private String channelName;

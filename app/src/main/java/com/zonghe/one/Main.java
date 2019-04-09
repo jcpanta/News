@@ -204,7 +204,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         final EditText_Clear editText=new EditText_Clear(this);
         editText.setTextSize(14);
         editText.setSingleLine(true);
-        editText.setHint("搜索");
+        editText.setHint("  实时热点搜索");
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
@@ -229,7 +229,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         iCallBack.SearchAciton(editText.getText().toString());
                     }
                     //startActivity(new Intent(Main.this,));
-                    Toast.makeText(Main.this, "需要搜索的是" + editText.getText(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Main.this, "需要搜索的是" + editText.getText(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

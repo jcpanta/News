@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.zonghe.one.JSONNewsEntityClass.Contentlist;
 import com.zonghe.one.JSONNewsEntityClass.Imageurls;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +48,10 @@ public class home_toutiao extends Fragment  {
     private NewsRecyclerListAdapter2 mNewsListAdapter;
     private List<Contentlist> mContentlistList;
     private List<Imageurls> mImageurlsList;
-
+    private List<String> mBannerImagesList;
+    private List<String> mBannerTitlesList;
+    private ViewGroup mViewGroup;
+    private int[] P=new int[6];
 
     public static home_toutiao createFragment(bottom_fragment_home home_tt){
         context = home_tt;
@@ -56,55 +61,8 @@ public class home_toutiao extends Fragment  {
     @Nullable
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState){
         view = inflater.inflate(R.layout.home_toutiao,container,false);
-        List images = new ArrayList();
-        images.add(R.drawable.advertisment1);
-        images.add(R.drawable.advertisment2);
-        images.add(R.drawable.advertisment3);
-        images.add(R.drawable.advertisment4);
-
-        /*
-        List titles=new ArrayList();
-        titles.add(R.string.banner_images1);
-        titles.add(R.string.banner_images2);
-        titles.add(R.string.banner_images3);
-        titles.add(R.string.banner_images4);
-        */
-
-        toutiao_banner= (Banner)view.findViewById(R.id.banner);
-        //设置图片加载器
-        toutiao_banner.setImageLoader(new GlideImageLoader());
-        //设置图片集合
-        toutiao_banner.setImages(images);
-
-        //设置title集合
-        // tuijian_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        // tuijian_banner.setBannerTitles(titles);
-
-        //banner设置方法全部调用完毕时最后调用
-        toutiao_banner.start();
-
-        //增加点击事件
-        toutiao_banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                switch (position){
-                    case 0:
-                        //startActivity(new Intent(getActivity(),));
-                        break;
-                    case 1:
-                        //startActivity(new Intent(getActivity(),));
-                        break;
-                    case 2:
-                        //startActivity(new Intent(getActivity(),));
-                        break;
-                    case 3:
-                        //startActivity(new Intent(getActivity(),));
-                        break;
-                }
-            }
-        });
         //蒋recyclerView开始
-
+        mViewGroup = container;
         mRecyclerView =view.findViewById(R.id.RecyclerView_toutiao);
         final Handler handler = new Handler(){
 
@@ -113,6 +71,8 @@ public class home_toutiao extends Fragment  {
                 if (msg.what ==1){
                     Log.d(TAG, "HandlerMessage: 请求完成即将进入解析");
                     handleJsonData(jsonString);
+                    //解析完成后开始展示banner。
+                    banner();
                     Log.d(TAG, "handleMessage: +mContentList="+mContentlistList);
                     Log.d(TAG, "HandlerMessage: 完成解析");
                     if (showapi_res_code ==0)
@@ -125,9 +85,7 @@ public class home_toutiao extends Fragment  {
                         mNewsListAdapter.setOnItemClickListener(new NewsListAdapter.onItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
-                                Intent intent = new Intent(container.getContext(), every_news_activity.class);
-                                intent.putExtra("News_Html",mContentlistList.get(position).getHtml());
-                                startActivity(intent);
+                                goToEveryNewsActivity(position, container);
                             }
                         });
                     }
@@ -152,6 +110,19 @@ public class home_toutiao extends Fragment  {
 
         return view;
     }
+
+    private void goToEveryNewsActivity(int position, @Nullable ViewGroup container) {
+        Intent intent = new Intent(container.getContext(), every_news_activity.class);
+        Contentlist sendContentlist = new Contentlist();
+        sendContentlist.setHtml(mContentlistList.get(position).getHtml());
+        sendContentlist.setSource(mContentlistList.get(position).getSource());
+        sendContentlist.setPubDate(mContentlistList.get(position).getPubDate());
+        sendContentlist.setTitle(mContentlistList.get(position).getTitle());
+        intent.putExtra("sendContentlist", (Serializable) sendContentlist);
+        startActivity(intent);
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -265,5 +236,100 @@ public class home_toutiao extends Fragment  {
             Log.d(TAG, "handleJsonData: 解析出错！！");
         }
     }
+    private void banner() {
 
+
+        /**
+         * 从json中随机获得图片和title的List集合⬇️
+         */
+        getBannerImagesAndTitles();
+
+        toutiao_banner= (Banner)view.findViewById(R.id.banner);
+        //设置图片加载器
+        toutiao_banner.setImageLoader(new GlideImageLoader());
+        //设置图片集合
+        toutiao_banner.setImages(mBannerImagesList);
+
+        //设置title集合
+        toutiao_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        toutiao_banner.setBannerTitles(mBannerTitlesList);
+
+
+        //banner设置方法全部调用完毕时最后调用
+        toutiao_banner.start();
+
+        //增加点击事件
+        toutiao_banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                switch (position){
+                    case 0:
+                        goToEveryNewsActivity(P[0],mViewGroup);
+                        break;
+                    case 1:
+                        goToEveryNewsActivity(P[1],mViewGroup);
+                        break;
+                    case 2:
+                        goToEveryNewsActivity(P[2],mViewGroup);
+                        break;
+                    case 3:
+                        goToEveryNewsActivity(P[3],mViewGroup);
+                        break;
+                    case 4:
+                        goToEveryNewsActivity(P[4],mViewGroup);
+                        break;
+                    case 5:
+                        goToEveryNewsActivity(P[5],mViewGroup);
+                        break;
+
+                }
+            }
+        });
+    }
+    private void getBannerImagesAndTitles(){
+        mBannerImagesList = new ArrayList();
+        mBannerTitlesList = new ArrayList<>();
+        int i = (int) (0+Math.random()*19);
+        Log.d(TAG, "getBannerImagesAndTitles: 随机数i="+i);
+        //建立数组保存随到的数字，来判断是否随机的数相同。
+        int[] n ={21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21};
+        int a=0;
+        for (int k =0; mBannerImagesList.size()<=5;k++){
+            Log.d(TAG, "getBannerImagesAndTitles: i是"+i);
+            Log.d(TAG, "getBannerImagesAndTitles:isExistRandomNumber(i,n)= "+isExistRandomNumber(i,n));
+            if (isExistRandomNumber(i,n)){
+                //如果存在则重新生成 i。
+                i = (int) (0+Math.random()*19);
+            }else {
+                Log.d(TAG, "getBannerImagesAndTitles: mContentlistList.get(i).getHavePic()"+mContentlistList.get(i).getHavePic());
+                if (mContentlistList.get(i).getHavePic()==true)
+                {
+                    n[k]=i;
+                    Log.d(TAG, "getBannerImagesAndTitles: aaaa嗷嗷="+i);
+                    P[a]=i;
+                    a++;
+                    mBannerImagesList.add(mContentlistList.get(i).getImageurls().get(0).getUrl());
+                    mBannerTitlesList.add(mContentlistList.get(i).getTitle());
+                    i = (int) (0+Math.random()*19);
+
+                }else {
+                    n[k]=i;
+                }
+            }
+        }
+
+        for (int q = 0;q<P.length;q++){
+            Log.d(TAG, "getBannerImagesAndTitles: qqqq="+P[q]);
+        }
+
+    }
+
+    private boolean isExistRandomNumber(int i,int[] j){
+       for (int n=0;n<j.length;n++){
+           if (i==j[n]){
+               return true;
+           }
+       }
+       return false;
+    }
 }

@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -75,8 +76,12 @@ public class SearchResultActivity extends AppCompatActivity implements View.OnCl
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(mContext, every_news_activity.class);
-                                intent.putExtra("News_Html",mContentlistList.get(position).getHtml());
-                                startActivity(intent);
+                                Contentlist sendContentlist = new Contentlist();
+                                sendContentlist.setHtml(mContentlistList.get(position).getHtml());
+                                sendContentlist.setSource(mContentlistList.get(position).getSource());
+                                sendContentlist.setPubDate(mContentlistList.get(position).getPubDate());
+                                sendContentlist.setTitle(mContentlistList.get(position).getTitle());
+                                intent.putExtra("sendContentlist", (Serializable) sendContentlist);                                startActivity(intent);
                             }
                         });
                     }

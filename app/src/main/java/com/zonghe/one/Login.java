@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
     private SharedPreferences login_sp;
     private String userNameValue;
     private String passwordValue;
+    private LoginNetConnectChangedReceiver mLoginNetConnectChangedReceiver;
     int ranColor;
 
     private UserDataManager mUserDataManager;
@@ -166,6 +167,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
     }
     @Override
     protected void onDestroy() {
+        unregisterReceiver(mLoginNetConnectChangedReceiver);
         super.onDestroy();
     }
     @Override
@@ -180,7 +182,7 @@ public class Login extends AppCompatActivity {  //登录界面活动
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        LoginNetConnectChangedReceiver mLoginNetConnectChangedReceiver =new LoginNetConnectChangedReceiver();
+        mLoginNetConnectChangedReceiver =new LoginNetConnectChangedReceiver();
         registerReceiver(mLoginNetConnectChangedReceiver,filter);
     }
 }

@@ -11,26 +11,60 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.zonghe.one.JSONNewsEntityClass.Contentlist;
+
+import java.io.Serializable;
 
 public class every_news_activity extends AppCompatActivity implements View.OnClickListener {
     private WebView mWebView;
-    private String html;
     private ImageButton everynews_back;
+    private String html;
+    private String source;
+    private String pubDate;
+    private String title;
+    private Contentlist mContentlist;
+    private TextView mTitleTextView;
+    private TextView mSourceTextView;
+    private TextView mDateTextView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_every_news);
-        mWebView = findViewById(R.id.newsDetailWebView);
-        html =getIntent().getStringExtra("News_Html");
+        findViews();
+        //获得传递的数据
+        Intent intent = getIntent();
+        mContentlist= (Contentlist) intent.getSerializableExtra("sendContentlist");
+        html=mContentlist.getHtml();
+        source = mContentlist.getSource();
+        pubDate =mContentlist.getPubDate();
+        title = mContentlist.getTitle();
+
+        //数据绑定xml
+        mTitleTextView.setText(title);
+        mSourceTextView.setText(source);
+        mDateTextView.setText(pubDate);
+
+
         WebSettings ws=mWebView.getSettings();
         ws.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadData(html,"text/html","UTF-8");
         mWebView.addJavascriptInterface(new JavaScriptInterface(this), "imagelistner");//这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这
-
         everynews_back=(ImageButton)findViewById(R.id.everynews_back);
         everynews_back.setOnClickListener(this);
 
+    }
+
+    private void findViews() {
+        mWebView = findViewById(R.id.newsDetailWebView);
+        mTitleTextView=findViewById(R.id.everynews_title);
+        mSourceTextView =findViewById(R.id.everynews_author);
+        mDateTextView = findViewById(R.id.everynews_time);
     }
 
     @Override
