@@ -184,7 +184,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.main_search:
-                alert_edit(v);
+                search_dialog(v);
                 break;
         }
     }
@@ -192,7 +192,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void  onPointerCaptureChanged(boolean hasCapture){
     }
 
-    public void alert_edit(View view){
+    public void search_dialog(View view){
         /*
         TextView title=new TextView(this);
         title.setText("搜索");
@@ -228,7 +228,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     if (!(iCallBack == null)){
                         iCallBack.SearchAciton(editText.getText().toString());
                     }
+<<<<<<< HEAD
                     //startActivity(new Intent(Main.this,));
+=======
+>>>>>>> 34fcb7c162612167129ebe535dabf1d422b285e8
                     //Toast.makeText(Main.this, "需要搜索的是" + editText.getText(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
