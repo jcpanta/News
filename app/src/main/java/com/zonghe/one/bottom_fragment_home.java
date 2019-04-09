@@ -23,7 +23,6 @@ public class bottom_fragment_home extends Fragment{
     private TabLayout home_tablayout;
     private bottom_fragment_home.MyAdapter home_adapter;
     private String[] home_title = {"头条","娱乐","军事","体育","科技"};
-    //TextView home_name;
 
     public static bottom_fragment_home createFragment(Context main_home){
         context = main_home;
@@ -38,7 +37,7 @@ public class bottom_fragment_home extends Fragment{
         home_tablayout=(TabLayout)view.findViewById(R.id.home_tablayout);
 
         home_list=new ArrayList<>();
-        home_list.add(home_toutiao_activity.createFragment(this));
+        home_list.add(home_toutiao.createFragment(this));
         home_list.add(home_yule.createFragment(this));
         home_list.add(home_junshi.createFragment(this));
         home_list.add(home_tiyu.createFragment(this));
@@ -54,7 +53,7 @@ public class bottom_fragment_home extends Fragment{
         super.onCreate(savedInstanceState);
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
+    public class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm){
             super(fm);
         }

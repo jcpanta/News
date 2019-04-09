@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
-public class every_news_activity extends AppCompatActivity {
+public class every_news_activity extends AppCompatActivity implements View.OnClickListener {
     private WebView mWebView;
     private String html;
+    private ImageButton everynews_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +27,21 @@ public class every_news_activity extends AppCompatActivity {
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadData(html,"text/html","UTF-8");
         mWebView.addJavascriptInterface(new JavaScriptInterface(this), "imagelistner");//这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这
+
+        everynews_back=(ImageButton)findViewById(R.id.everynews_back);
+        everynews_back.setOnClickListener(this);
+
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.everynews_back:
+                finish();
+                break;
+        }
+    }
+
     private class MyWebViewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {

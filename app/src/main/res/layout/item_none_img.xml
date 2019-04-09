@@ -23,22 +23,22 @@
                 android:text="送美26亿美元大礼！印度订购24架多功能直升机，强化反潜能力"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:textColor="@color/colorText"
                 android:textSize="16sp"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="8dp">
                 <TextView
                     android:id="@+id/itemAuthorName"
-                    android:text="MC洋洋拍客"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textSize="10sp"
-                    android:textColor="@color/colorPrimaryDark"/>
+                    android:layout_alignParentBottom="true"
+                    android:text="MC洋洋拍客"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="10sp" />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>

@@ -1,15 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".every_news_activity">
-    <WebView
-        android:id="@+id/newsDetailWebView"
+    tools:context=".every_news_activity"
+    android:background="@color/colorWhite">
+    <RelativeLayout
+        android:id="@+id/everynews_top"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF">
+        <ImageButton
+            android:id="@+id/everynews_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="4dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLine"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="MissingConstraints">
-
-    </WebView>
-</android.support.constraint.ConstraintLayout>
+        android:layout_below="@id/everynews_top">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/everynews_RL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:paddingHorizontal="8dp"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:id="@+id/everynews_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="天府通致歉！市民可下载致歉信做迟到证明"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorText" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/everynews_title"
+                    android:layout_marginTop="16dp">
+                    <TextView
+                        android:id="@+id/everynews_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="川报观察"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorText2"/>
+                    <TextView
+                        android:id="@+id/everynews_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/everynews_author"
+                        android:layout_marginStart="16dp"
+                        android:text="16小时前"
+                        android:textSize="10sp"
+                        android:textColor="@color/colorText2"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <WebView
+                android:id="@+id/newsDetailWebView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="MissingConstraints"
+                android:layout_below="@id/everynews_RL"
+                android:layout_marginTop="24dp"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

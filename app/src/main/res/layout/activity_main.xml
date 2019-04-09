@@ -32,6 +32,16 @@
                 android:textColor="@color/main_side"
                 android:textSize="20sp"
                 android:layout_centerVertical="true"/>
+            <!--
+            <android.support.v7.widget.Toolbar
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp">
+            </android.support.v7.widget.Toolbar>
+           !-->
+
             <ImageButton
                 android:id="@+id/main_search"
                 android:layout_width="22dp"
@@ -40,6 +50,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/main_search" />
+
         </RelativeLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/main_viewpager"

@@ -2,15 +2,15 @@ package com.zonghe.one;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.zonghe.one.JSONNewsEntityClass.Contentlist;
 import com.zonghe.one.JSONNewsEntityClass.Imageurls;
@@ -30,7 +30,7 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class SearchResultActivity extends AppCompatActivity {
+public class SearchResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG ="SearchResultActivity" ;
     private String searchString;
@@ -43,10 +43,15 @@ public class SearchResultActivity extends AppCompatActivity {
     private List<Imageurls> mImageurlsList;
     private Context mContext;
     private NetWork mNetWork;
+    private ImageButton searchresult_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
+
+        searchresult_back=(ImageButton)findViewById(R.id.searchresult_back);
+        searchresult_back.setOnClickListener(this);
+
         searchString=getIntent().getStringExtra("searchString");
         mContext = this.getApplicationContext();
         mRecyclerView =findViewById(R.id.RecyclerView_search);
@@ -203,6 +208,14 @@ public class SearchResultActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, e.toString());
             return null;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.searchresult_back:
+                finish();
         }
     }
 }

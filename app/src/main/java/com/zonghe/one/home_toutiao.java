@@ -33,7 +33,7 @@ import java.util.List;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class home_toutiao_activity extends Fragment  {
+public class home_toutiao extends Fragment  {
     private static String TAG="home_toutiao";
     private static bottom_fragment_home context;
     View view;
@@ -48,14 +48,14 @@ public class home_toutiao_activity extends Fragment  {
     private List<Imageurls> mImageurlsList;
 
 
-    public static home_toutiao_activity createFragment(bottom_fragment_home home_tj){
-        context = home_tj;
-        return new home_toutiao_activity();
+    public static home_toutiao createFragment(bottom_fragment_home home_tt){
+        context = home_tt;
+        return new home_toutiao();
     }
     @Override
     @Nullable
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState){
-        view = inflater.inflate(R.layout.activity_home_toutiao,container,false);
+        view = inflater.inflate(R.layout.home_toutiao,container,false);
         List images = new ArrayList();
         images.add(R.drawable.advertisment1);
         images.add(R.drawable.advertisment2);
@@ -267,5 +267,3 @@ public class home_toutiao_activity extends Fragment  {
     }
 
 }
-
-
