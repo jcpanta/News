@@ -125,7 +125,7 @@ public class home_keji extends Fragment  {
     private void requestDataByGet() {
         String appid="91287";//要替换成自己的
         String secret="aece97a8085e42f398fa0f39ff8d2cea";//要替换成自己的
-        String channelName = "娱乐最新";
+        String channelName = "科技最新";
         try {
             URL url = new URL("https://route.showapi.com/109-35?channelId=&channelName="+channelName+"&id=&maxResult=20&needAllList=0&needContent=0&needHtml=1&page=1&showapi_appid="+appid+"&showapi_timestamp=&title=&showapi_sign="+secret);
             Log.d(TAG, "requestDataByGet: url="+url);

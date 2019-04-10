@@ -22,6 +22,7 @@
         <activity android:name=".NewsDetailActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".Main"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
         <activity android:name=".Sign"
             android:screenOrientation="portrait"/>
