@@ -2,6 +2,7 @@ package com.zonghe.one;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class every_news_activity extends AppCompatActivity implements View.OnCli
     private TextView mTitleTextView;
     private TextView mSourceTextView;
     private TextView mDateTextView;
+    private Button sharebtn;
 
 
 
@@ -57,6 +60,14 @@ public class every_news_activity extends AppCompatActivity implements View.OnCli
         mWebView.addJavascriptInterface(new JavaScriptInterface(this), "imagelistner");//这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这
         everynews_back=(ImageButton)findViewById(R.id.everynews_back);
         everynews_back.setOnClickListener(this);
+
+        sharebtn=(Button)findViewById(R.id.sharebtn);
+        sharebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Share();
+            }
+        });
 
     }
 
@@ -133,4 +144,14 @@ public class every_news_activity extends AppCompatActivity implements View.OnCli
             context.startActivity(intent);
         }
     }
+    private void Share(){
+        Intent shareIntent=new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT,"分享一段话");
+
+        shareIntent=Intent.createChooser(shareIntent,"分享至");
+        startActivity(shareIntent);
+    }
+
 }

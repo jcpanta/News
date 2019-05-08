@@ -52,13 +52,15 @@
                 android:background="@drawable/main_search" />
 
         </RelativeLayout>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/main_bottomnavigation"
             android:layout_below="@id/main_top"
-            android:layout_above="@id/main_bottomnavigation">
-        </android.support.v4.view.ViewPager>
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"></android.support.v4.view.ViewPager>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/main_bottomnavigation"
