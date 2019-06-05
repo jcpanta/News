@@ -31,6 +31,8 @@ public class every_news_activity extends AppCompatActivity implements View.OnCli
     private TextView mSourceTextView;
     private TextView mDateTextView;
     private Button sharebtn;
+    private static final String TAG ="啊啊啊啊啊" ;
+
 
 
 
@@ -144,12 +146,14 @@ public class every_news_activity extends AppCompatActivity implements View.OnCli
             context.startActivity(intent);
         }
     }
+
     private void Share(){
+
+        Log.d(TAG, "Share:LINk "+mContentlist.getLink());
         Intent shareIntent=new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT,"分享一段话");
-
+        shareIntent.putExtra(Intent.EXTRA_TEXT,"震惊\n"+mContentlist.getTitle()+"\n"+mContentlist.getLink());
         shareIntent=Intent.createChooser(shareIntent,"分享至");
         startActivity(shareIntent);
     }

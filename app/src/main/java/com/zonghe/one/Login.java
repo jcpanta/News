@@ -74,15 +74,16 @@ public class Login extends AppCompatActivity {  //登录界面活动
         @Override
         public void onClick(View view) {
             CheckNetRegisterReceiver();
-            if (mNetWork.isNetConnected(Login.this)){
-                switch (view.getId()){
-                    case R.id.login_login:
-                        login();
-                        break;
-                    case R.id.login_sign:
-                        startActivity(new Intent(Login.this,Sign.class));
-                        break;
-                }
+//            if (mNetWork.isNetConnected(Login.this)){
+//
+//            }
+            switch (view.getId()){
+                case R.id.login_login:
+                    login();
+                    break;
+                case R.id.login_sign:
+                    startActivity(new Intent(Login.this,Sign.class));
+                    break;
             }
 
         }

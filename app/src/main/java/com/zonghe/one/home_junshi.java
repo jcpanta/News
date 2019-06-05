@@ -1,29 +1,34 @@
 package com.zonghe.one;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import com.zonghe.one.JSONNewsEntityClass.Contentlist;
 import com.zonghe.one.JSONNewsEntityClass.Imageurls;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -31,6 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.constraint.Constraints.TAG;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class home_junshi extends Fragment  {
@@ -44,6 +50,9 @@ public class home_junshi extends Fragment  {
     private NewsRecyclerListAdapter2 mNewsListAdapter;
     private List<Contentlist> mContentlistList;
     private List<Imageurls> mImageurlsList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    String FILENAME="junshi";
+    private int page = 1;
 
     public static home_junshi createFragment(bottom_fragment_home home_js){
         context = home_js;
@@ -54,12 +63,16 @@ public class home_junshi extends Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState){
         view = inflater.inflate(R.layout.home_junshi,container,false);
         mRecyclerView =view.findViewById(R.id.RecyclerView_junshi);
+        mContentlistList = new ArrayList<>();
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshlayout_junshi);
         final Handler handler = new Handler(){
 
             public void handleMessage (Message msg){
                 super.handleMessage(msg);
                 if (msg.what ==1){
                     Log.d(TAG, "HandlerMessage: 请求完成即将进入解析");
+                    saveJsonToFile(jsonString);
+
                     handleJsonData(jsonString);
                     Log.d(TAG, "handleMessage: +mContentList="+mContentlistList);
                     Log.d(TAG, "HandlerMessage: 完成解析");
@@ -79,6 +92,8 @@ public class home_junshi extends Fragment  {
                                 sendContentlist.setSource(mContentlistList.get(position).getSource());
                                 sendContentlist.setPubDate(mContentlistList.get(position).getPubDate());
                                 sendContentlist.setTitle(mContentlistList.get(position).getTitle());
+                                sendContentlist.setLink(mContentlistList.get(position).getLink());
+
                                 intent.putExtra("sendContentlist", (Serializable) sendContentlist);
                                 startActivity(intent);
                             }
@@ -90,21 +105,79 @@ public class home_junshi extends Fragment  {
 
 
         };
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                requestDataByGet();
+                if (fileIsExists(FILENAME)){
+                    getJsonFromeFile(FILENAME);
+                }else {
+                    if (NetWork.isNetConnected(getContext()))
+                    requestDataByGet(page);
+                    page++;
+                }
                 handler.sendEmptyMessage(1);
             }
         }).start();
 
+        doRefresh(container);
 
 
 
         return view;
     }
 
+    private void doRefresh(@Nullable final ViewGroup container) {
+        /**
+         * 下拉刷新
+         */
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshlayout_junshi);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "handleMessage: 进入刷新");
 
+                //发送网络请求，刷新RecyclerView
+                final Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        saveJsonToFile(jsonString);
+                        if (msg.what==2){
+                            Log.d(TAG, "handleMessage: 进入刷新解析数据");
+                            handleJsonData(jsonString);
+                            Log.d(TAG, "handleMessage: +mContentList="+mContentlistList);
+                            Log.d(TAG, "HandlerMessage: 完成解析");
+                            if (showapi_res_code ==0)
+                            {
+                                //刷新RecyclerView
+                                mNewsListAdapter.notifyDataSetChanged();
+                                //停止刷新
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            }                       }
+                    }
+                };
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestDataByGet(page++);
+                        Log.d(TAG, "handleMessage: 进入刷新请求数据");
+                        handler.sendEmptyMessage(2);
+                    }
+                }).start();
+
+            }
+        });
+
+
+        /**
+         * 上拉加载更多
+         *
+         */
+
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -129,12 +202,12 @@ public class home_junshi extends Fragment  {
             return null;
         }
     }
-    private void requestDataByGet() {
+    private void requestDataByGet(int page) {
         String appid="91287";//要替换成自己的
         String secret="aece97a8085e42f398fa0f39ff8d2cea";//要替换成自己的
         String channelName = "军事最新";
         try {
-            URL url = new URL("https://route.showapi.com/109-35?channelId=&channelName="+channelName+"&id=&maxResult=20&needAllList=0&needContent=0&needHtml=1&page=1&showapi_appid="+appid+"&showapi_timestamp=&title=&showapi_sign="+secret);
+            URL url = new URL("https://route.showapi.com/109-35?channelId=&channelName="+channelName+"&id=&maxResult=50&needAllList=0&needContent=0&needHtml=1&page="+page+"&showapi_appid="+appid+"&showapi_timestamp=&title=&showapi_sign="+secret);
             Log.d(TAG, "requestDataByGet: url="+url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(30*1000);
@@ -161,9 +234,9 @@ public class home_junshi extends Fragment  {
             showapi_res_code=jsonObject.getInt("showapi_res_code");
             showapi_res_error=jsonObject.getString("showapi_res_error");
             JSONArray contentlist =jsonObject.getJSONObject("showapi_res_body").getJSONObject("pagebean").getJSONArray("contentlist");
-            mContentlistList = new ArrayList<>();
 
             if (contentlist!=null &&contentlist.length()>0){
+                mContentlistList.clear();
                 for (int index = 0;index<contentlist.length();index++){
                     Log.d(TAG, "handleJsonData: 进入循环");
                     JSONObject everyNewsObject= (JSONObject) contentlist.get(index);
@@ -210,6 +283,56 @@ public class home_junshi extends Fragment  {
             e.printStackTrace();
             Log.d(TAG, "handleJsonData: 解析出错！！");
         }
+    }
+    private void saveJsonToFile(String jsonString){
+        try {
+            FileOutputStream fos=this.getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            OutputStreamWriter osw= new OutputStreamWriter(fos);
+            osw.write(jsonString);
+            osw.flush();
+            osw.close();
+            fos.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void getJsonFromeFile(String FILENAME){
+        try {
+            FileInputStream fis=this.getActivity().openFileInput(FILENAME);
+            InputStreamReader isr=new InputStreamReader(fis);
+            char[] data = new char[fis.available()];
+            isr.read(data);
+            isr.close();
+            fis.close();
+            jsonString = new String(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public boolean fileIsExists(String strFile) {
+
+        try
+        {
+            File f=new File("/data/data/com.zonghe.one/files/"+strFile);
+            if(!f.exists())
+            {
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
     }
 
 }
